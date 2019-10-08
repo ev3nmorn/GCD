@@ -46,10 +46,10 @@ namespace GCD
         public static Term operator *(Term t1, Term t2)
         {
             if (t1.Coefficient == "1")
-                return new Term(t2.Coefficient, t2.Power, t2.field_elements);
+                return new Term(t2.Coefficient, t1.Power + t2.Power, t2.field_elements);
 
             if (t2.Coefficient == "1")
-                return new Term(t1.Coefficient, t1.Power, t1.field_elements);
+                return new Term(t1.Coefficient, t1.Power + t2.Power, t1.field_elements);
 
             int ind_t1 = t1.Coefficient.IndexOf('a'),
                 degree_t1 = Int32.Parse(t1.Coefficient.Substring(ind_t1 + 1, t1.Coefficient.Length - ind_t1 - 1)),
@@ -67,7 +67,7 @@ namespace GCD
         public static Term operator /(Term t1, Term t2)
         {
             if (t2.Coefficient == "1")
-                return new Term(t1.Coefficient, t1.Power, t1.field_elements);
+                return new Term(t1.Coefficient, t1.Power - t2.Power, t1.field_elements);
 
             int ind_t1 = t1.Coefficient.IndexOf('a'),
                 degree_t1 = Int32.Parse(t1.Coefficient.Substring(ind_t1 + 1, t1.Coefficient.Length - ind_t1 - 1)),

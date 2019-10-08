@@ -60,12 +60,9 @@ namespace GCD
                 return;
             }
 
-            BitArray b = new BitArray(13);
-
-            GF2m field = new GF2m(BinaryStrToUInt(irreduciblePolynomialStr));//irreduciblePolynomialStr));
+            GF2m field = new GF2m(BinaryStrToUInt(irreduciblePolynomialStr));
             field.PrintField();
-            
-            
+                      
             Console.Write("Enter number of polynomials: ");
             string nStr = Console.ReadLine();
             int n;
