@@ -1,0 +1,7 @@
+E:\У\Параллельные вычисления\GCD\GCD\bin\Debug\GCD.exe.config
+E:\У\Параллельные вычисления\GCD\GCD\bin\Debug\GCD.exe
+E:\У\Параллельные вычисления\GCD\GCD\bin\Debug\GCD.pdb
+E:\У\Параллельные вычисления\GCD\GCD\obj\Debug\GCD.csprojAssemblyReference.cache
+E:\У\Параллельные вычисления\GCD\GCD\obj\Debug\GCD.csproj.CoreCompileInputs.cache
+E:\У\Параллельные вычисления\GCD\GCD\obj\Debug\GCD.exe
+E:\У\Параллельные вычисления\GCD\GCD\obj\Debug\GCD.pdb
