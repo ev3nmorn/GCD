@@ -8,15 +8,15 @@ namespace GCD
 {
     class Term
     {
-        /*int power;
+        int power;
         string coefficient;
-        Dictionary<string, List<int>> field_elements;
+        Dictionary<string, uint> field_elements;
 
-        public Term(string coefficient, int power, Dictionary<string, List<int>> field_elements)
+        public Term(string coefficient, int power, Dictionary<string, uint> field_elements)
         {
             this.power = power;
             this.coefficient = coefficient;
-            this.field_elements = new Dictionary<string, List<int>>(field_elements);
+            this.field_elements = new Dictionary<string, uint>(field_elements);
         }
 
         public int Power
@@ -35,7 +35,7 @@ namespace GCD
             }
         }
 
-        public Dictionary<string, List<int>> FieldElements
+        public Dictionary<string, uint> FieldElements
         {
             get
             {
@@ -83,6 +83,6 @@ namespace GCD
             else
                 return new Term("a" + new_degree.ToString(), t1.Power - t2.Power, t1.field_elements);
 
-        }*/
+        }
     }
 }

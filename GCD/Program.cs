@@ -25,7 +25,7 @@ namespace GCD
             return result;
         }
 
-        static bool CheckTerms(string[] terms, Dictionary<string, List<int>> elements)
+        static bool CheckTerms(string[] terms, Dictionary<string, uint> elements)
         {
             Regex regex1 = new Regex(@".+(?=(\*x(\^[0-9]+)?))"),
                 regex2 = new Regex(@"^x(\^[0-9]+)?");
@@ -65,9 +65,9 @@ namespace GCD
             GF2m field = new GF2m(BinaryStrToUInt(irreduciblePolynomialStr));//irreduciblePolynomialStr));
             field.PrintField();
             
-            /*
+            
             Console.Write("Enter number of polynomials: ");
-            /*string nStr = Console.ReadLine();
+            string nStr = Console.ReadLine();
             int n;
             if (!Int32.TryParse(nStr, out n))
             {
@@ -75,11 +75,11 @@ namespace GCD
                 return;
             }
 
-            Console.WriteLine("Enter " + 1/*n + " polynomials:");
+            Console.WriteLine("Enter " + n + " polynomials:");
             string polynomial;
             string[] terms;
             List<Polynomial> polynomials = new List<Polynomial>();
-            for (int i = 0; i < /*n1; ++i)
+            for (int i = 0; i < 1; ++i)
             {
                 polynomial = Console.ReadLine();
                 terms = polynomial.Split('+');
@@ -91,10 +91,10 @@ namespace GCD
                 polynomials.Add(new Polynomial(terms, field.Elements));
             }
 
-            Term t = (new Term("a2", 5, field.Elements)) / (new Term("a10", 3, field.Elements));
-            Console.WriteLine(t.Coefficient + " " + t.Power);
+            //Term t = (new Term("a2", 5, field.Elements)) / (new Term("a10", 3, field.Elements));
+            //Console.WriteLine(t.Coefficient + " " + t.Power);
 
-            Console.ReadLine();*/
+            Console.ReadLine();
         }
     }
 }

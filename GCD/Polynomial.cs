@@ -9,20 +9,20 @@ namespace GCD
 {
     class Polynomial
     {
-        /*List<Term> terms;
-        Dictionary<string, List<int>> field_elements;
+        List<Term> terms;
+        Dictionary<string, uint> field_elements;
 
-        public Polynomial(List<Term> terms, Dictionary<string, List<int>> field_elements)
+        public Polynomial(List<Term> terms, Dictionary<string, uint> field_elements)
         {
             this.terms = new List<Term>(terms);
-            this.field_elements = new Dictionary<string, List<int>>(field_elements);
+            this.field_elements = new Dictionary<string, uint>(field_elements);
         }
 
-        public Polynomial(string[] terms, Dictionary<string, List<int>> field_elements)
+        public Polynomial(string[] terms, Dictionary<string, uint> field_elements)
         {
             string coefficient, powerStr;
             this.terms = new List<Term>();
-            this.field_elements = new Dictionary<string, List<int>>(field_elements);
+            this.field_elements = new Dictionary<string, uint>(field_elements);
 
             foreach (string term in terms)
             {
@@ -56,6 +56,6 @@ namespace GCD
                 else
                     this.terms.Add(new Term(term, 0, field_elements));
             }
-        }*/
+        }
     }
 }
