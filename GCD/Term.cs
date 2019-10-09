@@ -92,7 +92,10 @@ namespace GCD
             foreach (KeyValuePair<string, uint> element in t1.FieldElements)
             {
                 if (newCoefficientValue == element.Value)
+                {
                     newCoefficient = element.Key;
+                    break;
+                }
             }
 
             return new Term(newCoefficient, t1.Power, t1.FieldElements);
