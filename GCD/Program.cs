@@ -88,9 +88,6 @@ namespace GCD
                 polynomials.Add(new Polynomial(terms, field.Elements));
             }
 
-            //Term t = (new Term("a2", 5, field.Elements)) / (new Term("a10", 3, field.Elements));
-            //Console.WriteLine(t.Coefficient + " " + t.Power);
-
             Console.ReadLine();
         }
     }

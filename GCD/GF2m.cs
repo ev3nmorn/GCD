@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace GCD
@@ -86,7 +85,7 @@ namespace GCD
 
         public void PrintField()
         {
-            Console.WriteLine("GF(2^" + highBitPoly + ") is:");
+            Console.WriteLine("GF(2^" + bitsPerElement + ") is:");
             foreach (KeyValuePair<string, uint> element in elements)
                 Console.WriteLine(element.Key + " " + ElementToBitStr(element.Value));
         }

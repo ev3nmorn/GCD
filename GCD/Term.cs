@@ -10,13 +10,13 @@ namespace GCD
     {
         int power;
         string coefficient;
-        Dictionary<string, uint> field_elements;
+        Dictionary<string, uint> fieldElements;
 
-        public Term(string coefficient, int power, Dictionary<string, uint> field_elements)
+        public Term(string coefficient, int power, Dictionary<string, uint> fieldElements)
         {
             this.power = power;
             this.coefficient = coefficient;
-            this.field_elements = new Dictionary<string, uint>(field_elements);
+            this.fieldElements = new Dictionary<string, uint>(fieldElements);
         }
 
         public int Power
@@ -39,50 +39,63 @@ namespace GCD
         {
             get
             {
-                return field_elements;
+                return fieldElements;
             }
         }
 
         public static Term operator *(Term t1, Term t2)
         {
             if (t1.Coefficient == "1")
-                return new Term(t2.Coefficient, t1.Power + t2.Power, t2.field_elements);
+                return new Term(t2.Coefficient, t1.Power + t2.Power, t2.fieldElements);
 
             if (t2.Coefficient == "1")
-                return new Term(t1.Coefficient, t1.Power + t2.Power, t1.field_elements);
+                return new Term(t1.Coefficient, t1.Power + t2.Power, t1.fieldElements);
 
-            int ind_t1 = t1.Coefficient.IndexOf('a'),
-                degree_t1 = Int32.Parse(t1.Coefficient.Substring(ind_t1 + 1, t1.Coefficient.Length - ind_t1 - 1)),
-                ind_t2 = t2.Coefficient.IndexOf('a'),
-                degree_t2 = Int32.Parse(t2.Coefficient.Substring(ind_t2 + 1, t2.Coefficient.Length - ind_t2 - 1)),
-                new_degree = (degree_t1 + degree_t2) % (t1.field_elements.Count - 1);
+            int indT1 = t1.Coefficient.IndexOf('a'),
+                degreeT1 = Int32.Parse(t1.Coefficient.Substring(indT1 + 1, t1.Coefficient.Length - indT1 - 1)),
+                indT2 = t2.Coefficient.IndexOf('a'),
+                degreeT2 = Int32.Parse(t2.Coefficient.Substring(indT2 + 1, t2.Coefficient.Length - indT2 - 1)),
+                newDegree = (degreeT1 + degreeT2) % (t1.fieldElements.Count - 1);
 
-            if (new_degree == 0)
-                return new Term("1", t1.Power + t2.Power, t1.field_elements);
+            if (newDegree == 0)
+                return new Term("1", t1.Power + t2.Power, t1.fieldElements);
             else
-                return new Term("a" + new_degree.ToString(), t1.Power + t2.Power, t1.field_elements);
+                return new Term("a" + newDegree.ToString(), t1.Power + t2.Power, t1.fieldElements);
 
         }
 
         public static Term operator /(Term t1, Term t2)
         {
             if (t2.Coefficient == "1")
-                return new Term(t1.Coefficient, t1.Power - t2.Power, t1.field_elements);
+                return new Term(t1.Coefficient, t1.Power - t2.Power, t1.fieldElements);
 
-            int ind_t1 = t1.Coefficient.IndexOf('a'),
-                degree_t1 = Int32.Parse(t1.Coefficient.Substring(ind_t1 + 1, t1.Coefficient.Length - ind_t1 - 1)),
-                ind_t2 = t2.Coefficient.IndexOf('a'),
-                degree_t2 = Int32.Parse(t2.Coefficient.Substring(ind_t2 + 1, t2.Coefficient.Length - ind_t2 - 1)),
-                new_degree = degree_t1 - degree_t2;
+            int indT1 = t1.Coefficient.IndexOf('a'),
+                degreeT1 = Int32.Parse(t1.Coefficient.Substring(indT1 + 1, t1.Coefficient.Length - indT1 - 1)),
+                indT2 = t2.Coefficient.IndexOf('a'),
+                degreeT2 = Int32.Parse(t2.Coefficient.Substring(indT2 + 1, t2.Coefficient.Length - indT2 - 1)),
+                newDegree = degreeT1 - degreeT2;
 
-            if (new_degree < 0)
-                new_degree = t1.field_elements.Count - 1 + new_degree;
+            if (newDegree < 0)
+                newDegree = t1.fieldElements.Count - 1 + newDegree;
 
-            if (new_degree == 0)
-                return new Term("1", t1.Power - t2.Power, t1.field_elements);
+            if (newDegree == 0)
+                return new Term("1", t1.Power - t2.Power, t1.fieldElements);
             else
-                return new Term("a" + new_degree.ToString(), t1.Power - t2.Power, t1.field_elements);
+                return new Term("a" + newDegree.ToString(), t1.Power - t2.Power, t1.fieldElements);
+        }
 
+        public static Term operator +(Term t1, Term t2)
+        {
+            uint newCoefficientValue = t1.FieldElements[t1.Coefficient] ^ t2.FieldElements[t2.Coefficient];
+            string newCoefficient = String.Empty;
+
+            foreach (KeyValuePair<string, uint> element in t1.FieldElements)
+            {
+                if (newCoefficientValue == element.Value)
+                    newCoefficient = element.Key;
+            }
+
+            return new Term(newCoefficient, t1.Power, t1.FieldElements);
         }
     }
 }
