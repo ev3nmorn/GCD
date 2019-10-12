@@ -10,13 +10,11 @@ namespace GCD
     {
         int power;
         string coefficient;
-        Dictionary<string, uint> fieldElements;
 
-        public Term(string coefficient, int power, Dictionary<string, uint> fieldElements)
+        public Term(string coefficient, int power)
         {
             this.power = power;
             this.coefficient = coefficient;
-            this.fieldElements = new Dictionary<string, uint>(fieldElements);
         }
 
         public int Power
@@ -35,61 +33,69 @@ namespace GCD
             }
         }
 
-        public Dictionary<string, uint> FieldElements
-        {
-            get
-            {
-                return fieldElements;
-            }
-        }
-
         public static Term operator *(Term t1, Term t2)
         {
-            if (t1.Coefficient == "1")
-                return new Term(t2.Coefficient, t1.Power + t2.Power, t2.fieldElements);
+            if (t1.coefficient == "1")
+            {
+                return new Term(t2.coefficient, t1.Power + t2.Power);
+            }
 
-            if (t2.Coefficient == "1")
-                return new Term(t1.Coefficient, t1.Power + t2.Power, t1.fieldElements);
+            if (t2.coefficient == "1")
+            {
+                return new Term(t1.coefficient, t1.power + t2.power);
+            }
 
-            int indT1 = t1.Coefficient.IndexOf('a'),
-                degreeT1 = Int32.Parse(t1.Coefficient.Substring(indT1 + 1, t1.Coefficient.Length - indT1 - 1)),
-                indT2 = t2.Coefficient.IndexOf('a'),
-                degreeT2 = Int32.Parse(t2.Coefficient.Substring(indT2 + 1, t2.Coefficient.Length - indT2 - 1)),
-                newDegree = (degreeT1 + degreeT2) % (t1.fieldElements.Count - 1);
+            int indT1 = t1.coefficient.IndexOf('a'),
+                degreeT1 = Int32.Parse(t1.coefficient.Substring(indT1 + 1, t1.coefficient.Length - indT1 - 1)),
+                indT2 = t2.coefficient.IndexOf('a'),
+                degreeT2 = Int32.Parse(t2.coefficient.Substring(indT2 + 1, t2.coefficient.Length - indT2 - 1)),
+                newDegree = (degreeT1 + degreeT2) % (int)(GF2m.ElementsCount - 1);
 
             if (newDegree == 0)
-                return new Term("1", t1.Power + t2.Power, t1.fieldElements);
+            {
+                return new Term("1", t1.Power + t2.Power);
+            }
             else
-                return new Term("a" + newDegree.ToString(), t1.Power + t2.Power, t1.fieldElements);
+            {
+                return new Term("a" + newDegree.ToString(), t1.Power + t2.Power);
+            }
 
         }
 
         public static Term operator /(Term t1, Term t2)
         {
-            if (t2.Coefficient == "1")
-                return new Term(t1.Coefficient, t1.Power - t2.Power, t1.fieldElements);
+            if (t2.coefficient == "1")
+            {
+                return new Term(t1.coefficient, t1.power - t2.power);
+            }
 
-            int indT1 = t1.Coefficient.IndexOf('a'),
-                degreeT1 = Int32.Parse(t1.Coefficient.Substring(indT1 + 1, t1.Coefficient.Length - indT1 - 1)),
-                indT2 = t2.Coefficient.IndexOf('a'),
-                degreeT2 = Int32.Parse(t2.Coefficient.Substring(indT2 + 1, t2.Coefficient.Length - indT2 - 1)),
+            int indT1 = t1.coefficient.IndexOf('a'),
+                degreeT1 = Int32.Parse(t1.coefficient.Substring(indT1 + 1, t1.coefficient.Length - indT1 - 1)),
+                indT2 = t2.coefficient.IndexOf('a'),
+                degreeT2 = Int32.Parse(t2.coefficient.Substring(indT2 + 1, t2.coefficient.Length - indT2 - 1)),
                 newDegree = degreeT1 - degreeT2;
 
             if (newDegree < 0)
-                newDegree = t1.fieldElements.Count - 1 + newDegree;
+            {
+                newDegree = (int)GF2m.ElementsCount - 1 + newDegree;
+            }
 
             if (newDegree == 0)
-                return new Term("1", t1.Power - t2.Power, t1.fieldElements);
+            {
+                return new Term("1", t1.Power - t2.Power);
+            }
             else
-                return new Term("a" + newDegree.ToString(), t1.Power - t2.Power, t1.fieldElements);
+            {
+                return new Term("a" + newDegree.ToString(), t1.Power - t2.Power);
+            }
         }
 
         public static Term operator +(Term t1, Term t2)
         {
-            uint newCoefficientValue = t1.FieldElements[t1.Coefficient] ^ t2.FieldElements[t2.Coefficient];
+            uint newCoefficientValue = GF2m.Elements[t1.coefficient] ^ GF2m.Elements[t2.coefficient];
             string newCoefficient = String.Empty;
 
-            foreach (KeyValuePair<string, uint> element in t1.FieldElements)
+            foreach (KeyValuePair<string, uint> element in GF2m.Elements)
             {
                 if (newCoefficientValue == element.Value)
                 {
@@ -98,7 +104,50 @@ namespace GCD
                 }
             }
 
-            return new Term(newCoefficient, t1.Power, t1.FieldElements);
+            return new Term(newCoefficient, t1.Power);
+        }
+
+        public static Term operator -(Term t1, Term t2)
+        {
+            return t1 + t2;
+        }
+
+        public override string ToString()
+        {
+            string result = String.Empty;
+
+            if (coefficient == "1")
+            {
+                if (power == 0)
+                {
+                    result = coefficient;
+                }
+                else if (power == 1)
+                {
+                    result = "x";
+                }
+                else
+                {
+                    result = "x^" + power.ToString();
+                }
+            }
+            else
+            {
+                if (power == 0)
+                {
+                    result = coefficient;
+                }
+                else if (power == 1)
+                {
+                    result = coefficient + "*x";
+                }
+                else
+                {
+                    result = coefficient + "*x^" + power.ToString();
+                }
+            }
+
+            return result;
         }
     }
 }

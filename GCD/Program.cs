@@ -18,14 +18,16 @@ namespace GCD
             for (int i = str.Length; i > 0; i--)
             {
                 if (str[i - 1] == '1')
+                {
                     result += temp;
+                }
                 temp *= 2;
             }
 
             return result;
         }
 
-        static bool CheckTerms(string[] terms, Dictionary<string, uint> elements)
+        static bool CheckTerms(string[] terms)
         {
             Regex regex1 = new Regex(@".+(?=(\*x(\^[0-9]+)?))"),
                 regex2 = new Regex(@"^x(\^[0-9]+)?");
@@ -34,16 +36,22 @@ namespace GCD
             {
                 if (regex1.IsMatch(term))
                 {
-                    if (!elements.ContainsKey(regex1.Match(term).ToString()))
+                    if (!GF2m.Elements.ContainsKey(regex1.Match(term).ToString()))
+                    {
                         return false;
+                    }
                     continue;
                 }
 
                 if (regex2.IsMatch(term))
+                {
                     continue;
+                }
 
-                if (!elements.ContainsKey(term))
+                if (!GF2m.Elements.ContainsKey(term))
+                {
                     return false;
+                }
             }
 
             return true;
@@ -60,8 +68,8 @@ namespace GCD
                 return;
             }
 
-            GF2m field = new GF2m(BinaryStrToUInt(irreduciblePolynomialStr));
-            field.PrintField();
+            GF2m.Build(BinaryStrToUInt(irreduciblePolynomialStr));
+            GF2m.Print();
                       
             Console.Write("Enter number of polynomials: ");
             string nStr = Console.ReadLine();
@@ -80,13 +88,23 @@ namespace GCD
             {
                 polynomial = Console.ReadLine();
                 terms = polynomial.Split('+');
-                if (!CheckTerms(terms, field.Elements))
+                if (!CheckTerms(terms))
                 {
                     Console.WriteLine("Invalid input");
                     return;
                 }
-                polynomials.Add(new Polynomial(terms, field.Elements));
+                polynomials.Add(new Polynomial(terms));
             }
+
+            /*Polynomial p = (new Polynomial("a5*x^5+a10*x^3+x^2+a10*x".Split('+'))) + (new Polynomial("a7*x^4+a5*x^5+a2*x^3+a10*x^2+1".Split('+')));
+            Polynomial p1 = (new Polynomial("a5*x^5+a10*x^3+x^2+a10*x+1".Split('+'))) * (new Polynomial("x".Split('+')));
+
+            Polynomial op1 = new Polynomial("a5*x^5+a10*x^3+x^2+a10*x".Split('+')),
+                op2 = new Polynomial("x".Split('+'));
+            Polynomial p2 = op1 / op2;
+            Console.WriteLine(p);
+            Console.WriteLine(p1);
+            Console.WriteLine(p2);*/
 
             Console.ReadLine();
         }
