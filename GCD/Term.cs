@@ -35,6 +35,11 @@ namespace GCD
 
         public static Term operator *(Term t1, Term t2)
         {
+            if (t1.coefficient == "0" || t2.coefficient == "0")
+            {
+                return new Term("0", 0);
+            }
+
             if (t1.coefficient == "1")
             {
                 return new Term(t2.coefficient, t1.Power + t2.Power);
@@ -64,10 +69,29 @@ namespace GCD
 
         public static Term operator /(Term t1, Term t2)
         {
+            if (t1.coefficient == "0")
+            {
+                return new Term("0", 0);
+            }
+
+            if (t2.coefficient == "0")
+            {
+                throw new ArithmeticException("divide by zero element");
+            }
+
             if (t2.coefficient == "1")
             {
                 return new Term(t1.coefficient, t1.power - t2.power);
             }
+
+            if (t1.coefficient == "1")
+            {
+                int ind = t2.coefficient.IndexOf('a'),
+                    degree = Int32.Parse(t2.coefficient.Substring(ind + 1, t2.coefficient.Length - ind - 1));
+                return new Term("a" + (GF2m.ElementsCount - degree - 1).ToString(), t1.power - t2.power);
+            }
+
+            
 
             int indT1 = t1.coefficient.IndexOf('a'),
                 degreeT1 = Int32.Parse(t1.coefficient.Substring(indT1 + 1, t1.coefficient.Length - indT1 - 1)),

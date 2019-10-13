@@ -96,15 +96,7 @@ namespace GCD
                 polynomials.Add(new Polynomial(terms));
             }
 
-            /*Polynomial p = (new Polynomial("a5*x^5+a10*x^3+x^2+a10*x".Split('+'))) + (new Polynomial("a7*x^4+a5*x^5+a2*x^3+a10*x^2+1".Split('+')));
-            Polynomial p1 = (new Polynomial("a5*x^5+a10*x^3+x^2+a10*x+1".Split('+'))) * (new Polynomial("x".Split('+')));
-
-            Polynomial op1 = new Polynomial("a5*x^5+a10*x^3+x^2+a10*x".Split('+')),
-                op2 = new Polynomial("x".Split('+'));
-            Polynomial p2 = op1 / op2;
-            Console.WriteLine(p);
-            Console.WriteLine(p1);
-            Console.WriteLine(p2);*/
+            Console.WriteLine(Polynomial.GCD(new Polynomial("a10*x^6+a7*x^5+x^3+x+1".Split('+')), new Polynomial("x^4+a2*x+1".Split('+'))));
 
             Console.ReadLine();
         }

@@ -13,6 +13,7 @@ namespace GCD
         public Polynomial()
         {
             terms = new List<Term>();
+            terms.Add(new Term("0", 0));
         }
 
         public Polynomial(List<Term> terms)
@@ -95,7 +96,13 @@ namespace GCD
                 if (terms[i].Coefficient == "0")
                 {
                     terms.Remove(terms[i]);
+                    i--;
                 }
+            }
+
+            if (terms.Count == 0)
+            {
+                terms.Add(new Term("0", 0));
             }
         }
 
@@ -135,6 +142,28 @@ namespace GCD
             }
         }
 
+        public static Polynomial GCD(Polynomial p1, Polynomial p2)
+        {
+            List<Polynomial> row1 = new List<Polynomial>() { new Polynomial("1".Split('+')), new Polynomial(), p1 },
+                row2 = new List<Polynomial>() { new Polynomial(), new Polynomial("1".Split('+')), p2 },
+                temp;
+            Polynomial q;
+
+            while (row2[2].terms[0].Coefficient != "0")
+            {
+                temp = new List<Polynomial>() { new Polynomial(row2[0].terms), new Polynomial(row2[1].terms), new Polynomial(row2[2].terms) };
+
+                q = row1[2] / row2[2];
+                row2[0] = row1[0] - (row2[0] * q);
+                row2[1] = row1[1] - (row2[1] * q);
+                row2[2] = row1[2] - (row2[2] * q);
+                row1 = new List<Polynomial>() { new Polynomial(temp[0].terms), new Polynomial(temp[1].terms), new Polynomial(temp[2].terms) };
+
+            }
+
+            return row1[2];
+        }
+
         public static Polynomial operator *(Polynomial p1, Polynomial p2)
         {
             Polynomial result = new Polynomial();
@@ -166,7 +195,7 @@ namespace GCD
                 temp = new Polynomial(new List<Term>() { nextResultTerm }) * p2;
 
                 p1 = p1 - temp;
-                if (p1.terms.Count == 0)
+                if (p1.terms.Count == 1 && p1.terms[0].Coefficient == "0")
                 {
                     break;
                 }
