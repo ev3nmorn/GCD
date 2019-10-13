@@ -164,6 +164,18 @@ namespace GCD
             return row1[2];
         }
 
+        public static Polynomial MultiGCD(List<Polynomial> polinomials)
+        {
+            Polynomial result = new Polynomial();
+
+            for (int i = 0; i < polinomials.Count - 1; i++)
+            {
+                result = (i == 0) ? GCD(polinomials[i], polinomials[i + 1]) : GCD(result, polinomials[i + 1]);
+            }
+
+            return result;
+        }
+
         public static Polynomial operator *(Polynomial p1, Polynomial p2)
         {
             Polynomial result = new Polynomial();

@@ -96,7 +96,9 @@ namespace GCD
                 polynomials.Add(new Polynomial(terms));
             }
 
-            Console.WriteLine(Polynomial.GCD(new Polynomial("a10*x^6+a7*x^5+x^3+x+1".Split('+')), new Polynomial("x^4+a2*x+1".Split('+'))));
+            Console.WriteLine(Polynomial.MultiGCD(polynomials));
+
+            //Console.WriteLine(Polynomial.GCD(new Polynomial("a14*x^2+a2*x+1".Split('+')), new Polynomial("a9*x^2+a8*x+1".Split('+'))));
 
             Console.ReadLine();
         }
