@@ -79,12 +79,17 @@ namespace GCD
                 Console.WriteLine("Invalid input");
                 return;
             }
+            if (n < 2)
+            {
+                Console.WriteLine("At least 2 polynomials");
+                return;
+            }
 
             Console.WriteLine("Enter " + n + " polynomials:");
             string polynomial;
             string[] terms;
             List<Polynomial> polynomials = new List<Polynomial>();
-            for (int i = 0; i < 1; ++i)
+            for (int i = 0; i < n; ++i)
             {
                 polynomial = Console.ReadLine();
                 terms = polynomial.Split('+');
